@@ -2,13 +2,16 @@
 if (process.env.NODE_ENV != "production") {
   require("dotenv").config();
 }
+//Cors import
+const cors = require("cors")
 const express = require("express");
 const connectToDB = require("./config/connectToDB");
 const {FetchNotes,CreateNote,FetchNote,UpdateNote,Deletenote} = require("./controller/noteController");
+const paramHandler = require("./controller/parameter_validation");
 //create express app
 const app = express();
 app.use(express.json());
-
+app.use(cors())
 
 //Connect with DataBase
 connectToDB();
@@ -23,7 +26,7 @@ app.get("/notes",FetchNotes);
 app.get("/note/:id",FetchNote);
 
 //Update Note
-app.put("/edit-note/:id",UpdateNote);
+app.put("/edit-note/:id",UpdateNote,paramHandler);
 
 //Delete Note
 app.delete('/delete-note/:id',Deletenote);
