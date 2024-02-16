@@ -1,5 +1,6 @@
 
 const Note = require("../models/note")
+const paramHandler = require("../controller/parameter_validation");
 
 async function CreateNote (req,res)
 {
@@ -65,37 +66,15 @@ async function FetchNotes (req,res)
 
 async function FetchNote(req,res)
 {
-    try{
-    //Get the id using parameter
-    const noteId =await req.params.id;
-    //find the note using Id
     
-    const note = await Note.findById(noteId);
-    //Response
-    res.json({
-          message: "Note retrieve Succesfully",
-          note: note  
-    })
-}
-catch(err)
-{
-    const errors = [];
-    for (const [fieldName, error] of Object.entries(err.errors)) {
-        errors.push({
-            field: fieldName,
-            name: error.name,
-            message: error.message
-        });
-        res.json({
-            message: "Can not fetch the note",
-            errors: errors
-        });
-    }
+        const noteID = await req.params.id;
+    
+     await  paramHandler(req,res,noteID);
     
 }
 
 
-}
+
 
 
 //Update Note
@@ -103,6 +82,7 @@ catch(err)
 async function UpdateNote(req,res)
 {
     try{
+
     //get the id using parameter
     const noteid = await req.params.id;
 
@@ -127,18 +107,13 @@ async function UpdateNote(req,res)
 }
 catch(err)
 {
-    const errors = [];
-    for (const [fieldName, error] of Object.entries(err.errors)) {
-        errors.push({
-            field: fieldName,
-            name: error.name,
-            message: error.message
-        });
-        res.json({
-            message: "Can not Edit/update note",
-            errors: errors
-        });
-    }
+    res.json(
+        {
+            message: "failed To update",
+            error: err
+            
+        }
+    )
     
 }
 
@@ -148,9 +123,10 @@ catch(err)
 //Delete Note using id
 async function Deletenote (req,res)
 {
+    const noteid = await req.params.id;
     try{
     //get the id using param
-    const noteid = await req.params.id;
+    
     //Delete the Data
     await Note.deleteOne({_id:noteid})
     //response
@@ -161,18 +137,8 @@ async function Deletenote (req,res)
 }
 catch(err)
 {
-    const errors = [];
-    for (const [fieldName, error] of Object.entries(err.errors)) {
-        errors.push({
-            field: fieldName,
-            name: error.name,
-            message: error.message
-        });
-        res.json({
-            message: "Can not Delete the note",
-            errors: errors
-        });
-    }
+
+    paramHandler(req,res,noteid)
     
 }
 }
