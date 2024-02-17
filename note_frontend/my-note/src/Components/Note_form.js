@@ -14,6 +14,15 @@ function NoteForm() {
 
     const [notes, setNotes] = useState([]);
 
+    const [updateNote,setUpdateNote] = useState(
+        {
+            _id : null,
+            title:"",
+            body: "",
+            type : "note",
+        }
+    )
+
     useEffect(() => {
         fetchNotes();
     }, []);
@@ -30,7 +39,7 @@ function NoteForm() {
     async function createNote() {
         try {
             const res = await axios.post("http://localhost:3000/create", createForm);
-            console.log(res);
+            //make the input field empty after add the note
             setCreateForm({
                 title: "",
                 body: "",
@@ -49,6 +58,15 @@ function NoteForm() {
 
     }
 
+    async function handleUpdateSubmit(e)
+    {
+        const {value,name} =e.target
+        setUpdateNote({
+            ...updateNote,
+            [name]: value,
+        });
+    }
+
     function updateCreateField(e) {
         const { name, value } = e.target;
         setCreateForm({
@@ -57,15 +75,95 @@ function NoteForm() {
         });
     }
 
+   async function Deletenote(_id)
+    {
+       
+        //deletet the note
+       const res = await axios.delete(`http://localhost:3000/delete-note/${updateNote._id}`);
+      //update the state
+      const newNotes = [...notes].filter((note)=>
+      {
+        return note._id !== _id;
+      })
+      setNotes(newNotes);
+    }
+    function toggleUpdate(note)
+    {
+        
+        //set state on update form
+        setUpdateNote({
+            _id: note._id,
+            title: note.title,
+            body: note.body,
+            type : note.type,
+        })
+
+    }
+   async function UpdateNote(e)
+    {
+        e.preventDefault()
+        const {title,body,type} = updateNote;
+        //Send the update request
+        const res =await axios.put(`http://localhost:3000/edit-note/${updateNote._id}`,{
+        title,
+        body,
+        type,
+        })
+
+        //update state
+        const newNote = [...notes];
+        const noteIndex = notes.findIndex(note=>
+            {
+                return note._id === updateNote._id
+            })
+            newNote[noteIndex]= res.data.note;
+
+            setNotes(newNote);
+
+            //clear update form field
+            setUpdateNote({
+                _id : null,
+                title:"",
+                body:"",
+                type: "note"
+            })
+    }
     return (
         <div>
              <div>
+                
             <h2>===Notes===</h2>
+            <table>
+                <tr>
+                    <td>
             {notes.map((note) => (
                 <div key={note._id}>
                     <h3>{note.title}</h3>
+                    <button onClick={()=>Deletenote(note._id)}>Delete</button>
+                    <button onClick={()=>toggleUpdate(note)}>Update</button>
                 </div>
             ))}
+            </td>
+            <td>
+                {updateNote._id && (
+            <form onSubmit={UpdateNote} method="POST">
+                <label htmlFor="title">Title:</label>
+                <input onChange={handleUpdateSubmit} type="text" id="title" name="title" value={updateNote.title} placeholder="Enter title..." required />
+
+                <label htmlFor="body">Body:</label>
+                <textarea onChange={handleUpdateSubmit} id="body" name="body" value={updateNote.body} rows="4" placeholder="Enter details..." required></textarea>
+
+                <label htmlFor="type">Type:</label>
+                <select onChange={handleUpdateSubmit} id="type" name="type" value={updateNote.type}>
+                    <option value="note">Note</option>
+                    <option value="quickNote">Quick Note</option>
+                </select>
+
+                <button type="submit">Submit</button>
+            </form>)}
+            </td>
+            </tr>
+            </table>
         </div>
         <div className="container">
             
