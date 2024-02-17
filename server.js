@@ -6,7 +6,7 @@ if (process.env.NODE_ENV != "production") {
 const cors = require("cors")
 const express = require("express");
 const connectToDB = require("./config/connectToDB");
-const {FetchNotes,CreateNote,FetchNote,UpdateNote,Deletenote} = require("./controller/noteController");
+const {FetchNotes,CreateNote,FetchNote,UpdateNote,Deletenote,DeleteAllnote} = require("./controller/noteController");
 const paramHandler = require("./controller/parameter_validation");
 //create express app
 const app = express();
@@ -28,8 +28,10 @@ app.get("/note/:id",FetchNote);
 //Update Note
 app.put("/edit-note/:id",UpdateNote,paramHandler);
 
-//Delete Note
+//Delete Note ID
 app.delete('/delete-note/:id',Deletenote);
+//Delete All note
+app.delete('/delete-all',DeleteAllnote)
 //start server
 
 app.listen(process.env.PORT);

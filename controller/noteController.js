@@ -143,7 +143,30 @@ catch(err)
 }
 }
 
+//Delete Note using id
+async function DeleteAllnote (req,res)
+{
+    //const noteid = await req.params.id;
+    try{
+    //get the id using param
+    
+    //Delete the Data
+    await Note.deleteMany()
+    //response
+
+    res.json({
+        message: "All Note Deleted Successfully"
+    })
+}
+catch(err)
+{
+
+    paramHandler(req,res,noteid)
+    
+}
+}
+
 //importing all function
 
 module.exports ={CreateNote,
-FetchNotes,FetchNote,UpdateNote,Deletenote} ;
+FetchNotes,FetchNote,UpdateNote,Deletenote,DeleteAllnote} ;
