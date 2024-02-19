@@ -3,8 +3,11 @@ import { useState } from "react";
 import { useEffect } from "react";
 import "../App.css";
 import axios from "axios";
+import useNoteStore from "../stores/noteStore";
 //import GetNote from "./Components/getNotes";
 function App() {
+
+    const store = useNoteStore();
   const [createForm, setCreateForm] = useState({
     title: "",
     body: "",
@@ -21,17 +24,21 @@ function App() {
   });
 
   useEffect(() => {
-    fetchNotes();
+    store.fetchNotes();
   }, []);
+//   useEffect(() => {
+    
+//     setNotes(store.notes);
+//   },[store.notes])
 
-  async function fetchNotes() {
-    try {
-      const res = await axios.get("http://localhost:3000/notes");
-      await setNotes(res.data.note);
-    } catch (error) {
-      console.error("Error fetching notes:", error);
-    }
-  }
+//   async function fetchNotes() {
+//     try {
+//       const res = await axios.get("http://localhost:3000/notes");
+//       await setNotes(res.data.note);
+//     } catch (error) {
+//       console.error("Error fetching notes:", error);
+//     }
+//   }
 
   async function createNote() {
     try {
@@ -49,8 +56,8 @@ function App() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    await createNote();
-    await fetchNotes();
+    await store.createNote();
+    await store.fetchNotes();
   }
 
   async function handleUpdateSubmit(e) {
@@ -61,23 +68,23 @@ function App() {
     });
   }
 
-  function updateCreateField(e) {
-    const { name, value } = e.target;
-    setCreateForm({
-      ...createForm,
-      [name]: value,
-    });
-  }
+//   function updateCreateField(e) {
+//     const { name, value } = e.target;
+//     setCreateForm({
+//       ...createForm,
+//       [name]: value,
+//     });
+//   }
 
-  async function Deletenote(_id) {
-    //deletet the note
-    await axios.delete(`http://localhost:3000/delete-note/${_id}`);
-    //update the state
-    const newNotes = [...notes].filter((note) => {
-      return note._id !== _id;
-    });
-    setNotes(newNotes);
-  }
+//   async function Deletenote(_id) {
+//     //deletet the note
+//     await axios.delete(`http://localhost:3000/delete-note/${_id}`);
+//     //update the state
+//     const newNotes = [...notes].filter((note) => {
+//       return note._id !== _id;
+//     });
+//     setNotes(newNotes);
+//   }
   function toggleUpdate(note) {
     //set state on update form
     setUpdateNote({
@@ -124,16 +131,17 @@ function App() {
         <table>
           <tr>
             <td>
-              {notes.map((note) => (
+              {store.notes.map((note) => (
                 <div key={note._id}>
                   <h3>{note.title}</h3>
-                  <button onClick={() => Deletenote(note._id)}>Delete</button>
+                  <button onClick={() => store.Deletenote(note._id)}>Delete</button>
                   <button onClick={() => toggleUpdate(note)}>Update</button>
                 </div>
               ))}
             </td>
             <td>
               {updateNote._id && (
+                
                 <form onSubmit={UpdateNote} method="POST">
                   <label htmlFor="title">Title:</label>
                   <input
@@ -179,21 +187,21 @@ function App() {
         <form onSubmit={handleSubmit} method="POST">
           <label htmlFor="title">Title:</label>
           <input
-            onChange={updateCreateField}
+            onChange={store.updateCreateField}
             type="text"
             id="title"
             name="title"
-            value={createForm.title}
+            value={store.createForm.title}
             placeholder="Enter title..."
             required
           />
 
           <label htmlFor="body">Body:</label>
           <textarea
-            onChange={updateCreateField}
+            onChange={store.updateCreateField}
             id="body"
             name="body"
-            value={createForm.body}
+            value={store.createForm.body}
             rows="4"
             placeholder="Enter details..."
             required
@@ -201,10 +209,10 @@ function App() {
 
           <label htmlFor="type">Type:</label>
           <select
-            onChange={updateCreateField}
+            onChange={store.updateCreateField}
             id="type"
             name="type"
-            value={createForm.type}
+            value={store.createForm.type}
           >
             <option value="note">Note</option>
             <option value="quickNote">Quick Note</option>
