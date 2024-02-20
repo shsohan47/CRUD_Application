@@ -8,11 +8,11 @@ import useNoteStore from "../stores/noteStore";
 function App() {
 
     const store = useNoteStore();
-  const [createForm, setCreateForm] = useState({
-    title: "",
-    body: "",
-    type: "note",
-  });
+//   const [createForm, setCreateForm] = useState({
+//     title: "",
+//     body: "",
+//     type: "note",
+//   });
 
   const [notes, setNotes] = useState([]);
 
@@ -40,33 +40,33 @@ function App() {
 //     }
 //   }
 
-  async function createNote() {
-    try {
-      await axios.post("http://localhost:3000/create", createForm);
-      //make the input field empty after add the note
-      setCreateForm({
-        title: "",
-        body: "",
-        type: "note",
-      });
-    } catch (error) {
-      console.error("Error creating note:", error);
-    }
-  }
+//   async function createNote() {
+//     try {
+//       await axios.post("http://localhost:3000/create", createForm);
+//       //make the input field empty after add the note
+//       setCreateForm({
+//         title: "",
+//         body: "",
+//         type: "note",
+//       });
+//     } catch (error) {
+//       console.error("Error creating note:", error);
+//     }
+//   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
-    await store.createNote();
-    await store.fetchNotes();
-  }
+//   async function handleSubmit(e) {
+//     e.preventDefault();
+//     await store.createNote();
+//     await store.fetchNotes();
+//   }
 
-  async function handleUpdateSubmit(e) {
-    const { value, name } = e.target;
-    setUpdateNote({
-      ...updateNote,
-      [name]: value,
-    });
-  }
+//   async function handleUpdateSubmit(e) {
+//     const { value, name } = e.target;
+//     setUpdateNote({
+//       ...updateNote,
+//       [name]: value,
+//     });
+//   }
 
 //   function updateCreateField(e) {
 //     const { name, value } = e.target;
@@ -77,7 +77,7 @@ function App() {
 //   }
 
 //   async function Deletenote(_id) {
-//     //deletet the note
+//     //delete the note
 //     await axios.delete(`http://localhost:3000/delete-note/${_id}`);
 //     //update the state
 //     const newNotes = [...notes].filter((note) => {
@@ -145,11 +145,11 @@ function App() {
                 <form onSubmit={UpdateNote} method="POST">
                   <label htmlFor="title">Title:</label>
                   <input
-                    onChange={handleUpdateSubmit}
+                    onChange={store.handleUpdateSubmit}
                     type="text"
                     id="title"
                     name="title"
-                    value={updateNote.title}
+                    value={store.updateNote.title}
                     placeholder="Enter title..."
                     required
                   />
@@ -159,7 +159,7 @@ function App() {
                     onChange={handleUpdateSubmit}
                     id="body"
                     name="body"
-                    value={updateNote.body}
+                    value={store.updateNote.body}
                     rows="4"
                     placeholder="Enter details..."
                     required
@@ -170,7 +170,7 @@ function App() {
                     onChange={handleUpdateSubmit}
                     id="type"
                     name="type"
-                    value={updateNote.type}
+                    value={store.updateNote.type}
                   >
                     <option value="note">Note</option>
                     <option value="quickNote">Quick Note</option>
@@ -184,7 +184,7 @@ function App() {
         </table>
       </div>
       <div className="container">
-        <form onSubmit={handleSubmit} method="POST">
+        <form onSubmit={store.handleSubmit} method="POST">
           <label htmlFor="title">Title:</label>
           <input
             onChange={store.updateCreateField}

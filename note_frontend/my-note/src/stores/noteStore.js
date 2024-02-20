@@ -9,7 +9,13 @@ const useNoteStore = create((set)=>
         body:"",
         type: "note"
     },
-
+    updateNote:
+    {
+        _id: null,
+        title:"",
+        body:"",
+        type:"note",
+    },
     fetchNotes: async()=>
     {
         try {
@@ -43,7 +49,7 @@ const useNoteStore = create((set)=>
     //   [name]: value,
     // });
     },
-    createNote : async (e)=>
+    createNote : async ()=>
     {
         try {
             const {createForm, notes} = useNoteStore.getState();
@@ -51,11 +57,11 @@ const useNoteStore = create((set)=>
             //make the input field empty after add the note
 
             set({notes: [...notes,res.data.note]});
-            createForm({
-              title: "",
-              body: "",
-              type: "note",
-            });
+            // createForm({
+            //   title: "",
+            //   body: "",
+            //   type: "note",
+            // });
           } catch (error) {
             console.error("Error creating note:", error);
           }
@@ -73,7 +79,47 @@ const useNoteStore = create((set)=>
     set({notes: newNotes})
 
     //setNotes(newNotes);
+    },
+    handleSubmit : async(e)=>
+    {
+        e.preventDefault();
+        const {createNote, fetchNotes} = useNoteStore();
+        await createNote();
+        await fetchNotes();
+    },
+    handleUpdateSubmit : (e)=>
+    {
+        const { value, name } = e.target;
+
+        set(state=>
+            {
+                return{
+                    ...state.updateNote,
+                    [name]: value
+                }
+            })
+       
+    },
+    toggleUpdate : (note) =>
+    {
+      const  {_id,title,body,type} = note;
+     //set state on update form
+     set(
+        {
+            updateNote:
+            {
+                _id,
+                title,
+                 body,
+                type,
+            }
+        }
+     )
+    
     }
+
+
+
 }))
 
 export default useNoteStore;
