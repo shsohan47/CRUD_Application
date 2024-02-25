@@ -8,14 +8,20 @@ const express = require("express");
 const connectToDB = require("./config/connectToDB");
 const {FetchNotes,CreateNote,FetchNote,UpdateNote,Deletenote,DeleteAllnote} = require("./controller/noteController");
 const paramHandler = require("./controller/parameter_validation");
+const {signUp,Login,Logout} = require("./controller/userController")
 //create express app
 const app = express();
 app.use(express.json());
 app.use(cors())
 
-//Connect with DataBase
+//Connect with ba
 connectToDB();
-
+//For Create Account 
+app.post("/signup",signUp);
+// //For Login
+// app.post("/login",Login);
+// //for Logout
+// app.get("/logout",Logout);
 
 //createing note api
 app.post("/create", CreateNote);
