@@ -52,16 +52,18 @@ const useNoteStore = create((set)=>
     createNote : async ()=>
     {
         try {
-            const {createForm, notes} = useNoteStore.getState();
+            const {createForm} = useNoteStore.getState();
            const res =  await axios.post("http://localhost:3000/create", createForm);
             //make the input field empty after add the note
-
-            set({notes: [...notes,res.data.note]});
-            // createForm({
-            //   title: "",
-            //   body: "",
-            //   type: "note",
-            // });
+            set((state) => ({
+                notes: [...state.notes, res.data.note],createForm:{
+                    title:"",
+                    body:"",
+                    type: "note"
+                }
+              }));
+              
+            
           } catch (error) {
             console.error("Error creating note:", error);
           }
@@ -69,35 +71,37 @@ const useNoteStore = create((set)=>
     Deletenote : async(_id)=>
     {
         //delete the note
-    await axios.delete(`http://localhost:3000/delete-note/${_id}`);
-    //update the state
-    const  {notes} = useNoteStore.getState()
-   
-    const newNotes = notes.filter((note) => {
-      return note._id !== _id;
-    });
-    set({notes: newNotes})
+        try {
+            await axios.delete(`http://localhost:3000/delete-note/${_id}`);
+            set((state) => ({
+              notes: state.notes.filter((note) => {
+              return note._id !== _id})
+            }));
+          } catch (error) {
+            console.error("Error deleting note:", error);
+          }
 
     //setNotes(newNotes);
     },
-    handleSubmit : async(e)=>
+    
+    HandleSubmit : async(e)=>
     {
+      
         e.preventDefault();
-        const {createNote, fetchNotes} = useNoteStore();
-        await createNote();
-        await fetchNotes();
+        await useNoteStore.getState().createNote();
+        await useNoteStore.getState().fetchNotes();
+       
     },
     handleUpdateSubmit : (e)=>
     {
         const { value, name } = e.target;
 
-        set(state=>
-            {
-                return{
-                    ...state.updateNote,
-                    [name]: value
-                }
-            })
+        set((state) => ({
+            updateNote: {
+              ...state.updateNote,
+              [name]: value
+            }
+          }));
        
     },
     toggleUpdate : (note) =>
@@ -116,6 +120,38 @@ const useNoteStore = create((set)=>
         }
      )
     
+    }, 
+    UpdateNote :async(e)=>
+    {
+        e.preventDefault();
+    const { title, body, type, _id } = useNoteStore.getState().updateNote;
+    const notes = useNoteStore.getState().notes
+    //Send the update request
+    const res = await axios.put(
+      `http://localhost:3000/edit-note/${_id}`,
+      {
+        title,
+        body,
+        type,
+      }
+    );
+
+    //update state
+    const newNote = [...notes];
+    const noteIndex = notes.findIndex((note) => {
+      return note._id === _id;
+    });
+    newNote[noteIndex] = res.data.note;
+    set((state)=>
+    ({
+      notes : newNote,
+      updateNote:{
+      _id: null,
+      title: "",
+      body: "",
+      type: "note",
+      }
+    }))
     }
 
 
