@@ -18,17 +18,29 @@ const useNoteStore = create((set)=>
     },
     fetchNotes: async()=>
     {
-        try {
-            const res = await axios.get("http://localhost:3000/notes");
-            //set to state
-          set({
-            notes: res.data.note
+        // try {
+        //     const res = await axios.get("http://localhost:3000/notes");
+        //     //set to state
+        //   set({
+        //     notes: res.data.note
            
-          })
-          } catch (error) {
-            console.error("Error fetching notes:", error);
-          }
+        //   })
           
+        //   } catch (error) {
+        //     console.error("Error fetching notes:", error);
+        //   }
+          try{
+            const res = await axios.get("http://localhost:3000/notes");
+            set(state=>
+                {
+               return  {
+                    notes:res.data.note
+          }
+        })
+          }
+          catch(err){
+            console.error("Error passing the data",err)
+          }
     },
 
     updateCreateField: (e) =>
@@ -153,8 +165,6 @@ const useNoteStore = create((set)=>
       }
     }))
     }
-
-
 
 }))
 
