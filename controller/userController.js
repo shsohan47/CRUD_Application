@@ -95,6 +95,16 @@ async function login(req,res)
         const hours = FututreDate.getHours();
         const minits = FututreDate.getMinutes();
         const sec = FututreDate.getSeconds()
+
+
+        //set the cookie
+        res.cookie("Authorization",token,
+        {
+            expires: new Date(exp),
+            httpOnly:true,
+            sameSite:"lax",
+            secure: process.env.NODE_ENV==="production",
+        })
        //response
 
        res.status(200).json({
@@ -115,6 +125,10 @@ async function login(req,res)
         })
      }
 }
+function checkAuth(req,res)
+{
+    res.sendStatus(200);
+}
 
 // function logout(req,res)
 // {
@@ -122,5 +136,5 @@ async function login(req,res)
 // }
 
 module.exports = {
-    signUp,login
+    signUp,login,checkAuth
 }

@@ -8,10 +8,14 @@ const express = require("express");
 const connectToDB = require("./config/connectToDB");
 const {FetchNotes,CreateNote,FetchNote,UpdateNote,Deletenote,DeleteAllnote} = require("./controller/noteController");
 const paramHandler = require("./controller/parameter_validation");
-const {signUp,login,Logout} = require("./controller/userController")
+const {signUp,login,Logout,checkAuth} = require("./controller/userController");
+const cookieParser = require("cookie-parser")
+const requireAuth = require("./middleware/requireAuth")
+
 //create express app
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 app.use(cors())
 
 //Connect with ba
@@ -22,6 +26,9 @@ app.post("/signup",signUp);
  app.post("/login",login);
 // //for Logout
 // app.get("/logout",Logout);
+
+//checkAuth
+app.get("/check-auth",requireAuth,checkAuth)
 
 //createing note api
 app.post("/create", CreateNote);
