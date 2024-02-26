@@ -10,10 +10,7 @@ const userSchema = new mongoose.Schema({
   },
   Password: { type: String,
      required: true },
-  ConfirmPassword: {
-    type: String,
-    required: true,
-  },
+  
 });
 
 const User = mongoose.model("User", userSchema);
