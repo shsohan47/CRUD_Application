@@ -1,10 +1,11 @@
 import useNoteStore from "../stores/noteStore"
-
+import "./App.css"
 export default function CreateForm()
 {
     const store = useNoteStore();
     return(
-        <div className="container">
+      <div>
+        <div className="container ">
         <form onSubmit={store.HandleSubmit} method="POST">
           <label htmlFor="title">Title:</label>
           <input
@@ -43,6 +44,7 @@ export default function CreateForm()
         </form>
 
         {/* Pass refresh function to GetNote component */}
+      </div>
       </div>
     )
 }

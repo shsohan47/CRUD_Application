@@ -18,19 +18,9 @@ const useNoteStore = create((set)=>
     },
     fetchNotes: async()=>
     {
-        // try {
-        //     const res = await axios.get("http://localhost:3000/notes");
-        //     //set to state
-        //   set({
-        //     notes: res.data.note
-           
-        //   })
-          
-        //   } catch (error) {
-        //     console.error("Error fetching notes:", error);
-        //   }
+       
           try{
-            const res = await axios.get("http://localhost:3000/notes");
+            const res = await axios.get("/notes");
             set(state=>
                 {
                return  {
@@ -56,16 +46,13 @@ const useNoteStore = create((set)=>
                 }
             }
         })
-    // setCreateForm({
-    //   ...createForm,
-    //   [name]: value,
-    // });
+   
     },
     createNote : async ()=>
     {
         try {
             const {createForm} = useNoteStore.getState();
-           const res =  await axios.post("http://localhost:3000/create", createForm);
+           const res =  await axios.post("/create", createForm);
             //make the input field empty after add the note
             set((state) => ({
                 notes: [...state.notes, res.data.note],createForm:{
@@ -84,7 +71,7 @@ const useNoteStore = create((set)=>
     {
         //delete the note
         try {
-            await axios.delete(`http://localhost:3000/delete-note/${_id}`);
+            await axios.delete(`/delete-note/${_id}`);
             set((state) => ({
               notes: state.notes.filter((note) => {
               return note._id !== _id})
@@ -140,7 +127,7 @@ const useNoteStore = create((set)=>
     const notes = useNoteStore.getState().notes
     //Send the update request
     const res = await axios.put(
-      `http://localhost:3000/edit-note/${_id}`,
+      `/edit-note/${_id}`,
       {
         title,
         body,

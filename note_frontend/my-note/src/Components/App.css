@@ -1,16 +1,16 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-}
+.notes-body{
+    background-color: #f0f0f0; /* Example of a relative path */
+        background-repeat: no-repeat;
+    
+  }
 .container {
-    max-width: 700px;
+    
+    max-width: 500px;
     margin: 0 auto;
-    background-color: #cdbbbb;
+    background-color: #8fb1a3b4;
     padding: 20px;
     border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgb(28, 169, 148);
 }
 label {
     display: block;
@@ -22,7 +22,8 @@ textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
-    border: 1px solid #ccc;
+    border: 1px solid #a92e2e;
+    border-color: rgb(85, 15, 15);
     border-radius: 5px;
     box-sizing: border-box;
 }
@@ -31,17 +32,18 @@ select {
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
+    border-color: rgb(14, 14, 23);
     border-radius: 5px;
     box-sizing: border-box;
 }
 button {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #22702a;
     color: #fff;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 button:hover {
-    background-color: #45a049;
+    background-color: #2d4ddb;
 }

@@ -2,7 +2,7 @@ import useNoteStore from "../stores/noteStore";
 export default function Note({note})
 {
     const store = useNoteStore(store =>
-        {
+        {//return object's function
             return ({
                 Deletenote:store.Deletenote,
                 toggleUpdate:store.toggleUpdate})
@@ -14,4 +14,5 @@ export default function Note({note})
                   <button onClick={() => store.toggleUpdate(note)}>Update</button>
                 </div>
     )
+    
 }

@@ -1,5 +1,6 @@
 import useNoteStore from "../stores/noteStore";
 import Note from "./Note";
+
 export default function AllNotes()
 {
     const store = useNoteStore();
