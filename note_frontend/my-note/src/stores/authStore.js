@@ -2,6 +2,8 @@ import axios from "axios";
 import create from "zustand";
 
 const authStore = create((set) => ({
+    //initial state of login
+    loggedIn : null,
     //define the initial state of the login Form
     loginForm: {
         email: "",
@@ -23,14 +25,40 @@ const authStore = create((set) => ({
         
         });
     },
-    Login: async (e)=>
+    Login: async ()=>
     {
-        e.preventDefault()
+        try{
+      
         const {loginForm} = authStore.getState();
-     const res = await  axios.post("/login",loginForm,{withCredentials:true})
+        await  axios.post("/login",loginForm,{withCredentials:true})
 
-     console.log(res);
+     set({loggedIn:true})
+        }catch(err)
+        {
+            console.log(err)
+        }
     },
+    checkAuth : async()=>
+   {
+    try{
+        await axios.get("/check-auth",{withCredentials:true});
+        set({loggedIn:true})
+    }
+    catch(err)
+    {
+        set({loggedIn:false})
+    }
+   },
+   LogOut: async()=>
+   {
+    try{
+        await axios.get("/logout")
+        set({loggedIn:false});
+    }catch(err)
+    {
+        <div>Can't Log out</div>
+    }
+   }
 }));
 
 export default authStore;

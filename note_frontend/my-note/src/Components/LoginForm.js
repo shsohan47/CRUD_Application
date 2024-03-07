@@ -1,19 +1,24 @@
 import React from "react";
 import authStore from "../stores/authStore";
+import { useNavigate } from "react-router-dom";
 
 
 export default function LoginForm() {
 const store = authStore();
-const handleChange =(e)=>
+const navigate = useNavigate()
+
+const handleLogin= async(e)=>
 {
-    store.updateLoginForm(e);
+  e.preventDefault();
+  await store.Login()
+  navigate("/")
 }
   return (
     <div className="login-container">
       <h2>Login</h2>
-      <form onSubmit={store.Login} className="login-form" action="#" method="post">
-        <input onChange={handleChange} type="text" name="email" value={store.loginForm.email} placeholder="Username" required />
-        <input onChange={handleChange} type="password" name="Password" value={store.loginForm.Password} placeholder="Password" required />
+      <form onSubmit={handleLogin} className="login-form" action="#" method="post">
+        <input onChange={store.updateLoginForm} type="text" name="email" value={store.loginForm.email} placeholder="Username" required />
+        <input onChange={store.updateLoginForm} type="password" name="Password" value={store.loginForm.Password} placeholder="Password" required />
         <input type="submit" value="Login" />
       </form>
     </div>
