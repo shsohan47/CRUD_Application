@@ -9,6 +9,25 @@ const authStore = create((set) => ({
         email: "",
         Password: "",
     },
+
+    SignupForm:{
+        email:"",
+        Password:"",
+    },
+    updateSignupForm:(e)=>
+    {   
+        const{name,value} = e.target;
+        set((state)=>
+        {
+            return{
+                SignupForm:{
+                    ...state.SignupForm,
+                    [name]:value,
+                }
+            }
+        })
+    },
+    
     //Update login form value from frontend
     updateLoginForm: (e) => {
         //take the name and value from where user hit and type
@@ -57,6 +76,13 @@ const authStore = create((set) => ({
     }catch(err)
     {
         <div>Can't Log out</div>
+    }
+   },
+   SignUp: async()=>
+   {
+    try{
+        const {SignupForm} =authStore.getState();
+        await axios.post("/signup",SignupForm);
     }
    }
 }));
