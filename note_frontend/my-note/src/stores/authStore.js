@@ -13,6 +13,7 @@ const authStore = create((set) => ({
     SignupForm:{
         email:"",
         Password:"",
+        ConfirmPassword:"",
     },
     updateSignupForm:(e)=>
     {   
@@ -83,6 +84,10 @@ const authStore = create((set) => ({
     try{
         const {SignupForm} =authStore.getState();
         await axios.post("/signup",SignupForm);
+    }
+    catch(err)
+    {
+        console.log("signUp Error:",err)
     }
    }
 }));

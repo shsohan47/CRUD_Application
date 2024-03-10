@@ -2,8 +2,9 @@
 import LoginPage from "../pages/LoginPage";
 import NotePage from "../pages/NotesPages";
 
-import { BrowserRouter, Routes, Route, Link, useLocation} from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import RequiredAuth from "./RequiredAuth";
+import SignUp from "../pages/SignUp";
 // Define App component
 function App() {
   // Return JSX for rendering
@@ -20,6 +21,7 @@ function App() {
           <Route index element={<RequiredAuth><NotePage/></RequiredAuth>}></Route>
           {/* Route for the login page */}
           <Route path="/login" element={<LoginPage/>}></Route>
+          <Route path="/signup" element={<SignUp/>}></Route>
         </Routes>
         {/* Navigation links */}
            <NavigationLink/>
@@ -43,7 +45,8 @@ const NavigationLink= ()=>
       else{
         return(
           <>
-          <td><Link to="/login" style={{color:"red"}}>Logout</Link></td>
+          
+          
           </>
         )
       }
