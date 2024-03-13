@@ -83,8 +83,7 @@ const authStore = create((set) => ({
    {
     try{
         const {SignupForm} =authStore.getState();
-        await axios.post("/signup",SignupForm);
-    }
+        await axios.post("/signup",SignupForm);}
     catch(err)
     {
         console.log("signUp Error:",err)

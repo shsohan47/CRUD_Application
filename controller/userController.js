@@ -38,6 +38,7 @@ async function signUp(req, res) {
       message: "User Created Successfully",
       user: user.email,
     });
+    console.log("User Created Successfully")
   } catch (err) {
     res.status(500).json({
       message: "internal Server Error",
