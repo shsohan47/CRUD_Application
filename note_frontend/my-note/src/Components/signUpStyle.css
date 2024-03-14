@@ -1,10 +1,12 @@
 body {
     margin: 0;
+    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-image: linear-gradient(to bottom right, #ff7e5f, #feb47b);
+    background-color: #f0f7fc; /* Light blue background */
+    font-family: Arial, sans-serif;
   }
   
   .login-container {

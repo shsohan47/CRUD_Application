@@ -1,0 +1,68 @@
+/* AllNotes.css */
+
+.note-container {
+    max-height: 80vh; /* Set maximum height for the container */
+    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
+  }
+  
+  .note-card {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    max-width: 400px; /* Set maximum width for the note cards */
+  }
+  
+  .note-card.deleted {
+    opacity: 0.5;
+  }
+  
+  .note-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .note-title {
+    margin: 0;
+  }
+  
+  .note-buttons {
+    display: flex;
+    align-items: center;
+  }
+  
+  .note-buttons button {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .note-buttons button.delete-btn {
+    color: #ff6347;
+  }
+  
+  .note-buttons button.update-btn {
+    color: #4682b4;
+  }
+  
+  .note-buttons button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .note-body {
+    margin-top: 10px;
+  }
+  
+  .note-type {
+    margin-top: 10px;
+    font-style: italic;
+    color: #666;
+  }
+  

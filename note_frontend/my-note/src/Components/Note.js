@@ -1,18 +1,34 @@
+import { useState } from "react";
+import "./AllNotes.css"
 import useNoteStore from "../stores/noteStore";
-export default function Note({note})
-{
-    const store = useNoteStore(store =>
-        {//return object's function
-            return ({
-                Deletenote:store.Deletenote,
-                toggleUpdate:store.toggleUpdate})
-        });
-    return(
-        <div key={note._id}>
-                  <h3>{note.title}</h3>
-                  <button onClick={() => store.Deletenote(note._id)}>Delete</button>
-                  <button onClick={() => store.toggleUpdate(note)}>Update</button>
-                </div>
-    )
-    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js" integrity="sha512-cJMgI2OtiquRH4L9u+WQW+mz828vmdp9ljOcm/vKTQ7+ydQUktrPVewlykMgozPP+NUBbHdeifE6iJ6UVjNw5Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+export default function Note({ note }) {
+  const [isDeleted, setIsDeleted] = useState(false);
+  const store = useNoteStore((store) => ({
+    Deletenote: store.Deletenote,
+    toggleUpdate: store.toggleUpdate,
+  }));
+
+  const handleDelete = async () => {
+    setIsDeleted(true);
+    await store.Deletenote(note._id);
+  };
+
+  return (
+    <div key={note._id} className={`note-card ${isDeleted ? "deleted" : ""}`}>
+      <div className="note-header">
+        <h3 className="note-title">{note.title}</h3>
+        <div className="note-buttons">
+          <button onClick={handleDelete} className="delete-btn">
+            Delete
+          </button>
+          <button onClick={() => store.toggleUpdate(note)} className="update-btn">
+            Update
+          </button>
+        </div>
+      </div>
+      <p className="note-body">{note.body}</p>
+      <div className="note-type">{note.type}</div>
+    </div>
+  );
 }
