@@ -7,11 +7,26 @@ import "../Components/signUpStyle.css"
 export default function SignUpForm() {
   const store = authStore();
   const navigate = useNavigate();
-
+  const isValidEmail = (email)=>
+  {
+     // Regular expression for basic email validation
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+  }
+  const [emailError,setEmailError] = useState('');
   const [passwordError,setPasswordError] = useState('')
   const [signUpSuccess,setSignUpSuccess] = useState(false);
   const handleSignUp = async (e) => {
     e.preventDefault();
+    if(!isValidEmail(store.SignupForm.email))
+    {
+      setEmailError("Invalid email Format")
+      setSignUpSuccess(false);
+      return;
+    }
+    else{
+      setEmailError("")
+    }
     await store.SignUp();
     if(store.SignupForm.Password !== store.SignupForm.ConfirmPassword)
     {
@@ -20,6 +35,7 @@ export default function SignUpForm() {
       return;
     }
     setPasswordError('');
+    
     setSignUpSuccess(true);
     // 
   };
@@ -53,6 +69,7 @@ export default function SignUpForm() {
                 placeholder="Email"
                 required
               />
+              {emailError && <div className="error-message">{emailError}</div>}
               <input
                 onChange={store.updateSignupForm}
                 type="password"
