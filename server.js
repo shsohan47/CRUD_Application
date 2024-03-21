@@ -34,20 +34,20 @@ app.get("/logout",logout);
 app.get("/check-auth",requireAuth,checkAuth)
 
 //createing note api
-app.post("/create", CreateNote);
+app.post("/create",requireAuth, CreateNote);
 //fetch all notes
-app.get("/notes",FetchNotes);
+app.get("/notes",requireAuth,FetchNotes);
 
 //fetch note by id
-app.get("/note/:id",FetchNote);
+app.get("/note/:id",requireAuth,FetchNote);
 
 //Update Note
-app.put("/edit-note/:id",UpdateNote,paramHandler);
+app.put("/edit-note/:id",requireAuth,UpdateNote,paramHandler);
 
 //Delete Note ID
-app.delete('/delete-note/:id',Deletenote);
+app.delete('/delete-note/:id',requireAuth,Deletenote);
 //Delete All note
-app.delete('/delete-all',DeleteAllnote)
+app.delete('/delete-all',requireAuth,DeleteAllnote)
 //start server
 
 app.listen(process.env.PORT);

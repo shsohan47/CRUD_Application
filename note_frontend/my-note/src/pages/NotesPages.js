@@ -6,6 +6,7 @@ import AllNotes from "../Components/AllNotes";
 import UpdateForm from "../Components/UpdateForm";
 import CreateForm from "../Components/CreateForm";
 import "../Components/NotePage.css";
+import { Link } from "react-router-dom";
 
 export default function NotePage() {
   const store = useNoteStore();
@@ -34,6 +35,7 @@ export default function NotePage() {
           <CreateForm />
         </div>
       </div>
+      <Link to="/logout" style={{color:"#24a0ed"}}>Logout</Link>
     </div>
   );
 }
