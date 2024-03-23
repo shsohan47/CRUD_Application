@@ -28,31 +28,23 @@ async function CreateNote(req, res) {
     }
   }
 }
-//Fetch all notes
+// Fetch all notes
 async function FetchNotes(req, res) {
-  //Find the notess
   try {
     const notes = await Note.find();
-    //Response
+    if (notes.length === 0) {
+      return res.status(404).json({ message: "No notes found" });
+    }
     res.json({
-      message: "All notes retrieve successfully",
-      note: notes,
+      message: "All notes retrieved successfully",
+      notes: notes,
     });
   } catch (err) {
-    const errors = [];
-    for (const [fieldName, error] of Object.entries(err.errors)) {
-      errors.push({
-        field: fieldName,
-        name: error.name,
-        message: error.message,
-      });
-      res.json({
-        message: "Can not Fetch all notes",
-        errors: errors,
-      });
-    }
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
   }
 }
+
 
 //fetch individual note by id
 

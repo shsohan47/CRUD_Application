@@ -1,10 +1,10 @@
 /* NotePage.css */
 
 .container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 20px;
+}
   
   .title {
     font-size: 24px;
@@ -39,6 +39,16 @@
   
   .note-section-content > * {
     min-width: 0; /* Ensure flexibility for smaller screens */
+  }
+  .all-notes {
+    overflow-y: auto; /* Enable vertical scrollbar for "All Notes" section */
+    /* Optional: Set a fixed height for the scrollable area if needed */
+    /* height: 500px; */
+  }
+  
+  .all-notes-wrapper {
+    /* Additional styles for the content within the scrollable area */
+    padding: 10px; /* Add padding if needed */
   }
   
   

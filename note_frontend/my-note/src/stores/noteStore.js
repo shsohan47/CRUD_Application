@@ -24,7 +24,7 @@ const useNoteStore = create((set)=>
             set(state=>
                 {
                return  {
-                    notes:res.data.note
+                    notes:res.data.notes
           }
         })
           }

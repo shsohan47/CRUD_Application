@@ -44,8 +44,9 @@ export default function CreateForm() {
           <option value="note">Note</option>
           <option value="quickNote">Quick Note</option>
         </select>
-
-        <button type="submit" className="form-button">Submit</button>
+      <div className="create-note">
+        <button type="submit" className="create">Submit</button>
+        </div>
       </form>
     </div>
   );
