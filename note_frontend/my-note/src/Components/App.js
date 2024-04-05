@@ -5,6 +5,7 @@ import NotePage from "../pages/NotesPages";
 import { BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import RequiredAuth from "./RequiredAuth";
 import SignUp from "../pages/SignUp";
+
 import LogOut from "../pages/LogOut";
 // Define App component
 function App() {
@@ -23,7 +24,9 @@ function App() {
           {/* Route for the login page */}
           <Route path="/login" element={<LoginPage/>}></Route>
           <Route path="/signup" element={<SignUp/>}></Route>
+
           <Route path="/logout" element={<LogOut/>}></Route>
+
         </Routes>
         {/* Navigation links */}
            <NavigationLink/>

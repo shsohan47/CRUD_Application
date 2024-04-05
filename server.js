@@ -62,6 +62,7 @@ app.put("/edit-note/:id",requireAuth, UpdateNote, paramHandler);
 app.delete("/delete-note/:id",requireAuth, Deletenote);
 //Delete All note
 app.delete("/delete-all",requireAuth, DeleteAllnote);
+
 //start server
 
 app.listen(process.env.PORT);

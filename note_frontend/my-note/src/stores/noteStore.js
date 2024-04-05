@@ -52,7 +52,7 @@ const useNoteStore = create((set)=>
     {
         try {
             const {createForm} = useNoteStore.getState();
-           const res =  await axios.post("/create", createForm);
+           const res =  await axios.post("/create", createForm,{withCredentials:true});
             //make the input field empty after add the note
             set((state) => ({
                 notes: [...state.notes, res.data.note],createForm:{
@@ -71,7 +71,7 @@ const useNoteStore = create((set)=>
     {
         //delete the note
         try {
-            await axios.delete(`/delete-note/${_id}`);
+            await axios.delete(`/delete-note/${_id}`,{withCredentials:true});
             set((state) => ({
               notes: state.notes.filter((note) => {
               return note._id !== _id})
@@ -132,7 +132,7 @@ const useNoteStore = create((set)=>
         title,
         body,
         type,
-      }
+      },{withCredentials:true}
     );
 
     //update state
