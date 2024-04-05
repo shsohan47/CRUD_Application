@@ -1,68 +1,96 @@
 /* AllNotes.css */
 
 .note-container {
-    max-height: 80vh; /* Set maximum height for the container */
-    overflow-y: auto; /* Enable vertical scrollbar when content overflows */
-  }
-  
-  .note-card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 10px;
-    margin-bottom: 20px;
-    background-color: #fff;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    max-width: 400px; /* Set maximum width for the note cards */
-  }
-  
-  .note-card.deleted {
-    opacity: 0.5;
-  }
-  
-  .note-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  .note-title {
-    margin: 0;
-  }
-  
-  .note-buttons {
-    display: flex;
-    align-items: center;
-  }
-  
-  .note-buttons button {
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    padding: 5px 10px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .note-buttons button.delete-btn {
-    color: #ff6347;
-  }
-  
-  .note-buttons button.update-btn {
-    color: #4682b4;
-  }
-  
-  .note-buttons button:hover {
-    background-color: #f0f0f0;
-  }
-  
-  .note-body {
-    margin-top: 10px;
-  }
-  
-  .note-type {
-    margin-top: 10px;
-    font-style: italic;
-    color: #666;
-  }
-  
+  max-height: 80vh; /* Adjust the maximum height as needed */
+  /* Remove overflow-y: auto; */
+  background-image: linear-gradient(to bottom, rgba(42, 204, 66, 0.8), rgba(255, 255, 255, 0.5)); /* Subtle background gradient */
+  border-radius: 15px; /* Rounded container corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* More prominent shadow */
+  padding: 15px; /* Adjust padding for better spacing */
+  overflow-y: auto; /* Add overflow-y to make it scrollable */
+}
+
+.note-card {
+  border: 1px solid #8a7676;
+  border-radius: 12px; /* Rounded card corners */
+  padding: 20px;
+  margin-bottom: 25px;
+  background-color: #fff; /* Maintain white background */
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2); /* Stronger shadow for cards */
+  transition: all 0.2s ease-in-out; /* Smoother transition effects */
+  max-width: 450px; /* Increased card width for readability */
+  display: flex; /* Allow for creative layouts (optional) */
+  flex-direction: column; /* Stack content vertically by default (optional) */
+}
+
+.note-card.deleted {
+  opacity: 0.5;
+  transform: scale(0.95); /* Subtle shrink effect for deleted notes */
+}
+
+.note-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Consider adding a decorative border or subtle background here */
+}
+
+.note-title {
+  font-size: 18px; /* Adjust title size for better prominence */
+  font-weight: bold;
+  margin: 0;
+  /* Optionally, use a custom font or add a hover effect */
+}
+
+.note-buttons {
+  display: flex;
+  align-items: center;
+  /* Experiment with placement or icon buttons */
+}
+
+.note-buttons button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  padding: 8px 15px; /* More padding for better click area */
+  border-radius: 5px; /* Rounded button corners */
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+
+.note-buttons button.update-btn {
+  color: #38a3a5; /* Teal for update action */
+}
+
+.note-buttons button:hover {
+  background-color: rgba(0, 0, 0, 0.1); /* Subtle hover effect */
+}
+
+.note-body {
+  margin-top: 15px;
+  font-size: 16px; /* More comfortable reading size */
+  line-height: 1.5; /* Improved readability for longer notes */
+  /* Consider using a font family that suits your note-taking style */
+}
+
+.note-type {
+  margin-top: 10px;
+  font-style: normal; /* Remove italics */
+  color: #fff; /* White text */
+  padding: 3px; /* Padding for spacing */
+  border-radius: 4px; /* Rounded corners */
+  text-align: left; /* Center text within the background */
+  margin-left: -5px;
+}
+
+.note-type.important {
+  background-color: #ff6347; /* Red for important notes */
+}
+
+.note-type.idea {
+  background-color: #133a4b90; /* Teal for ideas */
+}
+
+.note-type.to-do {
+  background-color: #cd9bb9f7; /* Yellow for to-do items */
+}

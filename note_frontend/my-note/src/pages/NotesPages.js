@@ -5,8 +5,10 @@ import useNoteStore from "../stores/noteStore";
 import AllNotes from "../Components/AllNotes";
 import UpdateForm from "../Components/UpdateForm";
 import CreateForm from "../Components/CreateForm";
+import {Link} from 'react-router-dom'
 import "../Components/NotePage.css";
 import { Link } from "react-router-dom";
+
 
 export default function NotePage() {
   const store = useNoteStore();
@@ -16,11 +18,12 @@ export default function NotePage() {
   }, []);
 
   return (
+    <div><Link to="/logout">Logout</Link>
     <div className="container">
-      <div className="section">
-        <h1 className="title">All Notes</h1>
+    <div className="section">
+        <h2 className="title">Create Note</h2>
         <div className="note-section">
-          <AllNotes />
+          <CreateForm />
         </div>
       </div>
       <div className="section">
@@ -29,13 +32,17 @@ export default function NotePage() {
           <UpdateForm />
         </div>
       </div>
-      <div className="section">
-        <h2 className="title">Create Note</h2>
-        <div className="note-section">
-          <CreateForm />
+      
+      
+      <div className="section all-notes">
+        <h1 className="title">All Notes</h1>
+        <div className="all-notes-wrapper">
+          <AllNotes /> {/* Pass notes data or rendering logic to AllNotes */}
         </div>
       </div>
       <Link to="/logout" style={{color:"#24a0ed"}}>Logout</Link>
     </div>
+    </div>
   );
+  
 }
