@@ -9,7 +9,7 @@ export default function LogoutPage()
     useEffect(()=>
     {
         store.LogOut();
-        navigate("/login")
+        navigate("/login");
 
     },[])
     return <div>Logging out</div>
