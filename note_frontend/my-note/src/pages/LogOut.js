@@ -1,22 +1,16 @@
-import React, { useEffect } from 'react'
-import authStore from '../stores/authStore'
-import { useNavigate } from 'react-router-dom';
+import { useEffect } from "react"
+import authStore from "../stores/authStore"
+import { useNavigate } from "react-router-dom"
 
-export default function LogOut() {
-
+export default function LogoutPage()
+{
     const store = authStore();
-    const Navigate = useNavigate();
+    const navigate = useNavigate()
     useEffect(()=>
     {
         store.LogOut();
-         setTimeout(()=>
-      {
-        Navigate("/login");
-      },1000);
+        navigate("/login")
+
     },[])
-   
-  return (
-    <div>{console.log("logout")}
-        Logging Out...</div>
-  )
+    return <div>Logging out</div>
 }
