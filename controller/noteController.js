@@ -10,6 +10,7 @@ async function CreateNote(req, res) {
       title: title,
       body: body,
       type: type,
+      user : req.user._id
     });
     //response it
     res.json({ message: "Created Successfully", note: note });
@@ -31,7 +32,7 @@ async function CreateNote(req, res) {
 // Fetch all notes
 async function FetchNotes(req, res) {
   try {
-    const notes = await Note.find();
+    const notes = await Note.find({user:req.user._id});
     if (notes.length === 0) {
       return res.status(404).json({ message: "No notes found" });
     }
@@ -50,7 +51,7 @@ async function FetchNotes(req, res) {
 
 async function FetchNote(req, res) {
   const noteID = await req.params.id;
-
+  
   await paramHandler(req, res, noteID);
 }
 
@@ -64,20 +65,18 @@ async function UpdateNote(req, res) {
     //get the data from request body
     const { title, body, type } = req.body;
     //update the note
-    await Note.findByIdAndUpdate(noteid, {
+    await Note.findOneAndUpdate({_id:noteid, user:req.user._id}, {
       title: title,
       body: body,
       type: type,
     });
 
-    //find the latest updated note
-    const note = await Note.findById(noteid);
-    //response
+    //find the latest updated note 
+   const note = await Note.findOne({_id:noteid, user:req.user._id});
 
-    res.json({
-      message: "Note Updated Successfully",
-      note: note,
-    });
+   res.json({
+    notes:note
+   })
   } catch (err) {
     res.json({
       message: "failed To update",
@@ -93,7 +92,7 @@ async function Deletenote(req, res) {
     //get the id using param
 
     //Delete the Data
-    await Note.deleteOne({ _id: noteid });
+    await Note.deleteOne({ _id: noteid ,user:req.user._id});
     //response
 
     res.json({

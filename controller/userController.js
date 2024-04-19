@@ -3,49 +3,63 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 async function signUp(req, res) {
   try {
-    //get the email and password from the req body
-    const { email, Password, ConfirmPassword } = req.body;
+    // Get email, password, and confirmPassword from the request body
+    // Get email, password, and confirmPassword from the request body
+const { email, Password, ConfirmPassword} = req.body;
 
-    //Hash the password
-    const hashPass = bcrypt.hashSync(Password, 8);
+    console.log("Request Body:", req.body);
 
-    //handle exception
-    if (Password != ConfirmPassword) {
+
+    // Check if passwords match
+    if (Password !== ConfirmPassword) {
       return res.status(400).json({
         message: "Error while creating account",
-        details: "Password didn't match",
+        details: "Passwords do not match",
       });
     }
-    //Handle the email field
+
+    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return res.status(400).json({
         message: "Error while creating account",
-        details: "Please Enter a valid email",
+        details: "Please enter a valid email",
       });
     }
-    const existUser = await User.findOne({ email });
-    if (existUser) {
+
+    // Check if email already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
       return res.status(400).json({
         message: "Error while creating the account",
-        details: "Email Already Exists",
+        details: "Email already exists",
       });
     }
-    //create a user data using it
-    const user = await User.create({ email, Password: hashPass });
-    //response
-    res.json({
+
+    // Hash the password
+    console.log(Password)
+    const hashedPassword = bcrypt.hashSync(Password, 8);
+
+    // Create the user
+    const user = await User.create({ email, Password: hashedPassword });
+
+    // Log and send response
+    console.log("User Created Successfully:", user.email);
+    res.status(201).json({
       message: "User Created Successfully",
       user: user.email,
     });
-    console.log("User Created Successfully")
-  } catch (err) {
+  } catch (error) {
+    // Log the error
+    console.error("Error during sign up:", error);
+
+    // Send a generic error response
     res.status(500).json({
-      message: "internal Server Error",
-      details: err,
+      message: "Internal Server Error",
     });
   }
 }
+
 
 async function login(req, res) {
   try {

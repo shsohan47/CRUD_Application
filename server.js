@@ -56,7 +56,7 @@ app.get("/notes",requireAuth, FetchNotes);
 app.get("/note/:id",requireAuth, FetchNote);
 
 //Update Note
-app.put("/edit-note/:id",requireAuth, UpdateNote, paramHandler);
+app.put("/edit-note/:id",requireAuth, UpdateNote);
 
 //Delete Note ID
 app.delete("/delete-note/:id",requireAuth, Deletenote);
