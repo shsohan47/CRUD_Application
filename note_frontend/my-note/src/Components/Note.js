@@ -17,9 +17,9 @@ export default function Note({ note }) {
   console.log("notes:",note)
 
   return (
-    <div key={note._id} className={`note-card ${isDeleted ? "deleted" : ""}`}>
+    <div key={note?._id} className={`note-card ${isDeleted ? "deleted" : ""}`}>
       <div className="note-header">
-        <h3 className="note-title">{note.title}</h3>
+        <h3 className="note-title">{note?.title}</h3>
         <div className="note-buttons">
           <button onClick={handleDelete} className="delete-btn">
             Delete
@@ -29,10 +29,10 @@ export default function Note({ note }) {
           </button>
         </div>
       </div>
-      <p className="note-body">{note.body}</p>
+      <p className="note-body">{note?.body}</p>
       <div className="note-type">
-      {note.type === "note" && <span className="note-type idea">{note.type}</span>}
-      {note.type === "quickNote" && <span className="note-type to-do">{note.type}</span>}</div>
+      {note?.type === "note" && <span className="note-type idea">{note?.type}</span>}
+      {note?.type === "quickNote" && <span className="note-type to-do">{note?.type}</span>}</div>
     </div>
   );
 }

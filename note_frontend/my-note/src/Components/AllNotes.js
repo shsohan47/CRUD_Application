@@ -10,7 +10,7 @@ export default function AllNotes() {
     return (
         <div>
             {store.notes.map((note) => (
-                <Note note={note} key={note._id} />
+                <Note note={note} key={note?._id} />
             ))}
         </div>
     );
