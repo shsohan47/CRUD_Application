@@ -4,7 +4,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    height: auto;
     background-color: #f0f7fc; /* Light blue background */
     font-family: Arial, sans-serif;
   }

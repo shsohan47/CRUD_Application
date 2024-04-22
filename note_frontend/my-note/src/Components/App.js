@@ -6,7 +6,7 @@ import { BrowserRouter, Routes, Route, useLocation} from 'react-router-dom'
 import RequiredAuth from "./RequiredAuth";
 import SignUp from "../pages/SignUp";
 
-import LogOut from "../pages/LogOut";
+import LogOut from "../pages/Logout";
 // Define App component
 function App() {
   // Return JSX for rendering
@@ -25,7 +25,7 @@ function App() {
           <Route path="/login" element={<LoginPage/>}></Route>
           <Route path="/signup" element={<SignUp/>}></Route>
 
-          <Route path="/logout" element={<LogOut/>}></Route>
+          //\<Route path="/logout" element={<LogOut/>}></Route>
 
         </Routes>
         {/* Navigation links */}
