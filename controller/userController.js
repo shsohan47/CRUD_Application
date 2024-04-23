@@ -67,14 +67,15 @@ async function login(req, res) {
     const { email, Password } = req.body;
     if (!email || !Password) {
       return res.status(400).json({
-        message: "email or Password Required",
+        message: "Error while login",
+        details: "email or Password Required"
       });
     }
     //Check weather it match with the existence user in data base
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(401).json({
-        message: "Error while loggin",
+        message: "Error while login",
         details: "User Not Found",
       });
     }
@@ -83,7 +84,7 @@ async function login(req, res) {
     if (!passMatch) {
       return res.status(401).json({
         message: "Error while Logging",
-        details: "Pass Didnt Match",
+        details: "Password Didn't Match",
       });
     }
     
