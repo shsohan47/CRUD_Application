@@ -61,6 +61,7 @@ const authStore = create((set) => ({
      
         }catch(error)
         {
+            set({loggedIn:false})
             throw error;
         }
         set({
