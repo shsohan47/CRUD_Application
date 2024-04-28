@@ -128,7 +128,6 @@ const useNoteStore = create((set)=>
     {
         e.preventDefault();
     const { title, body, type, _id,user,__v } = useNoteStore.getState().updateNote;
-    console.log("updateNote:",useNoteStore.getState().updateNote)
     const notes = useNoteStore.getState().notes
     try{
     //Send the update request
@@ -148,7 +147,6 @@ const useNoteStore = create((set)=>
     {
       if(note._id === _id)
       {
-        console.log(_id)
         return useNoteStore.getState().updateNote;
       }else{
         return note
