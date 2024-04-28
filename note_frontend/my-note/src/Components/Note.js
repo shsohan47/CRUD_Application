@@ -14,7 +14,6 @@ export default function Note({ note }) {
     setIsDeleted(true);
     await store.Deletenote(note._id);
   };
-  console.log("notes:",note)
 
   return (
     <div key={note?._id} className={`note-card ${isDeleted ? "deleted" : ""}`}>

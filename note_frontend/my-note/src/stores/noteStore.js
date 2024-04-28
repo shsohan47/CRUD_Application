@@ -15,6 +15,8 @@ const useNoteStore = create((set)=>
         title:"",
         body:"",
         type:"note",
+        user:"",
+        __v: 0
     },
     fetchNotes: async()=>
     {
@@ -105,7 +107,7 @@ const useNoteStore = create((set)=>
     },
     toggleUpdate : (note) =>
     {
-      const  {_id,title,body,type} = note;
+      const  {_id,title,body,type,user,__v} = note;
      //set state on update form
      set(
         {
@@ -115,6 +117,8 @@ const useNoteStore = create((set)=>
                 title,
                  body,
                 type,
+                user,
+                __v
             }
         }
      )
@@ -123,8 +127,10 @@ const useNoteStore = create((set)=>
     UpdateNote :async(e)=>
     {
         e.preventDefault();
-    const { title, body, type, _id } = useNoteStore.getState().updateNote;
+    const { title, body, type, _id,user,__v } = useNoteStore.getState().updateNote;
+    console.log("updateNote:",useNoteStore.getState().updateNote)
     const notes = useNoteStore.getState().notes
+    try{
     //Send the update request
     const res = await axios.put(
       `/edit-note/${_id}`,
@@ -132,25 +138,34 @@ const useNoteStore = create((set)=>
         title,
         body,
         type,
+        user,
+        __v
       }
     );
 
     //update state
-    const newNote = [...notes];
-    const noteIndex = notes.findIndex((note) => {
-      return note._id === _id;
+    const updateNote = notes.map(note=>
+    {
+      if(note._id === _id)
+      {
+        console.log(_id)
+        return useNoteStore.getState().updateNote;
+      }else{
+        return note
+      }
     });
-    newNote[noteIndex] = res.data.note;
+    
     set((state)=>
     ({
-      notes : newNote,
-      updateNote:{
-      _id: null,
-      title: "",
-      body: "",
-      type: "note",
-      }
+      ...state,
+      notes : updateNote,
+      
     }))
+    // console.log(useNoteStore.getState().notes)
+  }catch(error)
+  {
+    console.error("error updating note:",error)
+  }
     }
 
 }))
