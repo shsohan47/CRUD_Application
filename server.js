@@ -1,8 +1,7 @@
-//import dependencies
-if (process.env.NODE_ENV != "production") {
+// Import dependencies
+if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
-//Cors import
 const cors = require("cors");
 const express = require("express");
 const connectToDB = require("./config/connectToDB");
@@ -13,7 +12,8 @@ const {
   UpdateNote,
   Deletenote,
   DeleteAllnote,
-} = require("./controller/noteController");
+  SearchByName // Renamed from SearchByName
+} = require("./controller/noteController"); // Corrected import
 const paramHandler = require("./controller/parameter_validation");
 const {
   signUp,
@@ -24,7 +24,7 @@ const {
 const cookieParser = require("cookie-parser");
 const requireAuth = require("./middleware/requireAuth");
 
-//create express app
+// Create express app
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -35,33 +35,26 @@ app.use(
   })
 );
 
-//Connect with ba
+// Connect to database
 connectToDB();
-//For Create Account
-app.post("/signup", signUp);
-// //For Login
-app.post("/login", login);
-// //for Logout
-app.get("/logout", logout);
 
-//checkAuth
-app.get("/check-auth", requireAuth, checkAuth);
+// Routes
+app.post("/signup", signUp); // For creating an account
+app.post("/login", login); // For user login
+app.get("/logout", logout); // For user logout
+app.get("/check-auth", requireAuth, checkAuth); // Middleware for checking user authentication
 
-//createing note api
-app.post("/create",requireAuth, CreateNote);
-//fetch all notes
-app.get("/notes",requireAuth, FetchNotes);
+// Note-related routes
+app.post("/create", requireAuth, CreateNote); // Create a new note
+app.get("/notes", requireAuth, FetchNotes); // Fetch all notes
+app.get("/note/:id", requireAuth, FetchNote); // Fetch a note by ID
+app.put("/edit-note/:id", requireAuth, UpdateNote); // Update a note
+app.delete("/delete-note/:id", requireAuth, Deletenote); // Delete a note by ID
+app.delete("/delete-all", requireAuth, DeleteAllnote); // Delete all notes
+app.get("/search", requireAuth, SearchByName); // Search for notes by title or body
 
-//fetch note by id
-app.get("/note/:id",requireAuth, FetchNote);
-
-//Update Note
-app.put("/edit-note/:id",requireAuth, UpdateNote);
-
-//Delete Note ID
-app.delete("/delete-note/:id",requireAuth, Deletenote);
-//Delete All note
-app.delete("/delete-all",requireAuth, DeleteAllnote);
-//start server
-
-app.listen(process.env.PORT);
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});

@@ -121,6 +121,41 @@ async function DeleteAllnote(req, res) {
   }
 }
 
+async function SearchByName(req,res){
+  const {search}  = req.query
+  try{
+
+    const filterNotes = await Note.find({
+      $or:[
+        {title:{
+          $regex:search, $options: "i"
+        }},
+        {body:{
+          $regex:search, $options: "i"
+        }},
+      ],user:req.user._id,
+    })
+    if(filterNotes.length === 0)
+    {
+      return res.status(404).json({
+        message: "No note Matched!"
+      })
+    }
+    //response
+    res.json({
+      message:"search result",
+      notes:filterNotes
+    })
+
+  }catch(err)
+  {
+    return res.status(500).json({
+      message: "Internal Server error",
+      error: err
+    })
+  }
+}
+
 //importing all function
 
 module.exports = {
@@ -130,4 +165,5 @@ module.exports = {
   UpdateNote,
   Deletenote,
   DeleteAllnote,
+  SearchByName
 };
