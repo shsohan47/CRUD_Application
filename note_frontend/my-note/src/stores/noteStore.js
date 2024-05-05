@@ -164,7 +164,18 @@ const useNoteStore = create((set)=>
   {
     console.error("error updating note:",error)
   }
-    }
+    },
+    deleteAllNote: async()=>
+    {
+      try{
+        await axios.delete("/delete-all");
+        set((state)=>({
+           notes:[]
+        }))
+      }catch(err){
+        console.log("Error is happening for delete all note")
+      }
+      }
 
 }))
 

@@ -110,7 +110,7 @@ async function DeleteAllnote(req, res) {
     //get the id using param
 
     //Delete the Data
-    await Note.deleteMany();
+    await Note.deleteMany({user:req.user._id});
     //response
 
     res.json({
