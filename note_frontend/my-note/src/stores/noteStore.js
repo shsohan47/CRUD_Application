@@ -1,8 +1,11 @@
 import {create} from "zustand"
 import axios from "axios";
+
+
 const useNoteStore = create((set)=>
 ({
     notes: [],
+    query: "",
 
     createForm: {
         title:"",
@@ -17,6 +20,23 @@ const useNoteStore = create((set)=>
         type:"note",
         user:"",
         __v: 0
+    },
+
+    searchNotes: async(query)=>
+    {
+      try{
+        console.log("query",query)
+        const response = await axios.get(`/search?search=${query}`)
+        console.log("response:",response)
+        set(state=>{
+          return{
+            notes:response.data.notes
+          }
+        })
+      }catch(error)
+      {
+        console.log(error)
+      }
     },
     fetchNotes: async()=>
     {
@@ -49,6 +69,18 @@ const useNoteStore = create((set)=>
             }
         })
    
+    },
+    updateQueryState:(e)=>
+    {
+      const {value} = e.target
+      set((state)=>
+    {
+      return{
+        query: value
+      }
+     
+    })
+    
     },
     createNote : async ()=>
     {
@@ -131,7 +163,7 @@ const useNoteStore = create((set)=>
     const notes = useNoteStore.getState().notes
     try{
     //Send the update request
-    const res = await axios.put(
+     await axios.put(
       `/edit-note/${_id}`,
       {
         title,

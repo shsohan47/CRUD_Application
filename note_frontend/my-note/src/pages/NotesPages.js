@@ -7,6 +7,7 @@ import UpdateForm from "../Components/UpdateForm";
 import CreateForm from "../Components/CreateForm";
 import { Link } from "react-router-dom";
 import "../Components/NotePage.css";
+import SearchBar from "../Components/SearchBar"
 
 export default function NotePage() {
   const store = useNoteStore();
@@ -18,6 +19,7 @@ export default function NotePage() {
   return (
     <div>
       <Link to="/logout">Logout</Link>
+       <SearchBar/>
       <div className="container">
         <div className="section">
           <h2 className="title">Create Note</h2>
